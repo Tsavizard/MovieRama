@@ -2,10 +2,10 @@
 
 one:
   user: one
-  movie: one
-  type: 
+  movie: two
+  vote_type: like
 
 two:
   user: two
-  movie: two
-  type: 
+  movie: one
+  vote_type: dislike
