@@ -8,13 +8,13 @@ class User::VoteTest < ActiveSupport::TestCase
 
   test "user can not vote on their own submissions" do
     vote = User::Vote.new({ movie: movies(:one), user: users(:one), vote_type: "like" })
-    assert vote.invalid?
+    refute vote.valid?
   end
 
   test "user can not vote multiple time for the same movie" do
     # users(:one).votes.create({ movie: movies(:two) })
     duplicate_vote = users(:one).votes.create({ movie: movies(:two), vote_type: "like" })
-    assert duplicate_vote.invalid?
+    refute duplicate_vote.valid?
     assert User::Vote.count == 2
   end
 
@@ -26,6 +26,6 @@ class User::VoteTest < ActiveSupport::TestCase
     assert dislike.valid?
 
     invalid_vote = User::Vote.new({ movie: movies(:one), user: users(:three), vote_type: "asdsada" })
-    assert invalid_vote.invalid?
+    refute invalid_vote.valid?
   end
 end
