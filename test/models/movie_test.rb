@@ -29,4 +29,14 @@ class MovieTest < ActiveSupport::TestCase
     movie = Movie.new({ title: "The Shawshank redemption",  description: "A banker is framed for the murder of his wife " + excessive_string, user: users(:one) })
     assert movie.invalid?
   end
+
+  test "has many likes" do
+    movie = movies(:one)
+    assert movie.likes.size == 0
+  end
+
+  test "has many dislikes" do
+    movie = movies(:one)
+    assert movie.dislikes.size == 1
+  end
 end
