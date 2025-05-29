@@ -1,0 +1,23 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+}
+
+a.logo {
+  text-decoration: none;
+  color: black;
+}
+
+.button-link {
+  background-color: blue;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.75rem;
+
+  &:hover {
+    background-color: purple;
+    color: black;
+  }
+}

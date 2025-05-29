@@ -1,0 +1,16 @@
+<header>
+    <a href='/' class="logo">
+        <h1>MovieRama</h1>
+    </a>
+   <% if @current_user %>
+        <div class="session">
+
+        </div>
+    <% else %>
+        <div class="session">
+            <a href="/login">Log in</a>
+            <span>or</span>
+            <a href="/sign-up" class='button-link'>Sign up</a>
+        </div>
+    <% end  %>
+</header>

@@ -1,0 +1,9 @@
+<%= render 'components/movie_sort_bar' %>
+
+<section class="content">
+    <%= render partial: 'components/movie_list', locals: { movies: @movies } %>
+
+    <% if @current_user %>
+        <%= render 'components/new_movie_cta' %>
+    <% end %>
+</section>

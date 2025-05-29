@@ -8,3 +8,40 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0 solid;
+}
+
+html,
+body {
+  height: 100dvh;
+  width: 100dvw;
+}
+
+main {
+  padding: 0.75rem 1rem;
+}
+
+content {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+a,
+a:visited,
+a:hover,
+a:focus,
+a:hover,
+a:active {
+  color: blue;
+}

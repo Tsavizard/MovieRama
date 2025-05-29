@@ -1,0 +1,22 @@
+.movie-list {
+  width: 80%;
+}
+
+.movie-entry {
+  width: 100%;
+}
+
+.movie-submission-details {
+}
+
+.movie-description {
+}
+
+.vote-section {
+  display: flex;
+  gap: 0.5rem;
+  text-align: start;
+}
+
+.votes {
+}
