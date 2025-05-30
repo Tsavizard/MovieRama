@@ -7,7 +7,7 @@
   <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
   <%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
 
-  <%= form_with url: session_path, class: 'form' do |form| %>
+  <%= form_with url: users_path, scope: :user, class: 'form' do |form| %>
     <div class="form-input">
         <%= form.label :username, "Username " %>
         <%= form.text_field :username, required: true, autofocus: true, placeholder: "Enter your username", value: params[:email_address] %>
