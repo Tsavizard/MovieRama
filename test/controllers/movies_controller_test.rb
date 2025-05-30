@@ -3,6 +3,7 @@ require "test_helper"
 class MoviesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @movie = movies(:one)
+    post session_path, params: { email_address: users(:one).email_address, password: "password" }
   end
 
   test "should get index" do
@@ -16,8 +17,8 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create movie" do
-    assert_difference("Movie.count") do
-      post movies_url, params: { movie: { description: @movie.description, title: @movie.title, user_id: @movie.user_id } }
+    assert_difference -> { Movie.count } do
+      post movies_url, params: { movie: { description: "movie for testing reasons", title: "some test movie", user_id: users(:one).id } }
     end
 
     assert_redirected_to movie_url(Movie.last)
@@ -39,7 +40,7 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy movie" do
-    assert_difference("Movie.count", -1) do
+    assert_difference -> { Movie.count }, -1 do
       delete movie_url(@movie)
     end
 
