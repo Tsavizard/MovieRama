@@ -39,4 +39,14 @@ class MovieTest < ActiveSupport::TestCase
     movie = movies(:one)
     assert movie.dislikes.size == 1
   end
+
+  test "votes are destroyed when movie is destroyed" do
+    user = users(:three)
+    movie = movies(:three)
+    movie.likes.create(user: user)
+
+    assert_difference -> { User::Vote.count }, -1 do
+      movie.destroy
+    end
+  end
 end

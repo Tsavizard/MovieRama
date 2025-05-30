@@ -1,6 +1,6 @@
 class Movie < ApplicationRecord
   belongs_to :user
-  has_many :votes, class_name: "User::Vote"
+  has_many :votes, class_name: "User::Vote", dependent: :destroy
   has_many :likes, -> { where(vote_type: :like) }, class_name: "User::Vote"
   has_many :dislikes, -> { where(vote_type: :dislike) }, class_name: "User::Vote"
 
