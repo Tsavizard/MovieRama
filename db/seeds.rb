@@ -12,18 +12,17 @@
 usernames = [ "Cersei Lannister", "Jaime Lannister", "Tyrion Lannister", "Tywin Lannister", "Daenerys Targaryen", "Jon Snow", "Eddard Stark", "Bronn", "Sandor Clegane" ]
 usernames.each do |username|
   User.find_or_create_by!(username: username) do |user|
-    user.email = "#{username.downcase.gsub(' ', '_')}@movierama_game_of_thrones.com"
+    user.email_address = "#{username.downcase.gsub(' ', '_')}@movierama-game-of-thrones.com"
     user.password = "password"
     user.password_confirmation = "password"
   end
 end
 
 # Create default user
-User.find_or_create_by!(email: "demo@movierama_game_of_thrones.com") do |user|
+User.find_or_create_by!(email_address: "demo@movierama-game-of-thrones.com") do |user|
   user.password = "password"
   user.password_confirmation = "password"
   user.username = "Demo User"
-  user.email_address = "demo@movierama_game_of_thrones.com"
 end
 
 movies_data = [
