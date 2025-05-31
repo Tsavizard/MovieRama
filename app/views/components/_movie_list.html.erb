@@ -4,7 +4,7 @@
             <h4><%= movie.title %></h4>
 
             <span class="movie-submission-details">
-                Posted by <%= movie.user.user_name %> X days ago
+                Posted by <%= movie.user.username %> X days ago
             </span>
 
             <p class="movie-description">
@@ -12,18 +12,18 @@
             </p>
 
             <section class="vote-section">
-                <% if @current_user %>
-                    <% if @current_user == movie.user %>
+                <% if current_user %>
+                    <% if current_user == movie.user %>
                         <div class="votes">
                             <span><%= movie.likes.size %>likes</span> | <span><%= movie.dislikes.size %>hates</span>
                         </div>
                     <% elsif movie.votes.empty? %>
                         Be the first to vote for this movie: <a>Like</a> | <a>Hate</a>
-                    <% elsif @current_user.likes?(movie) %>
+                    <% elsif current_user.likes?(movie) %>
                         <div class="votes">
                             <a><%= movie.likes.size %>likes</a> | <a><%= movie.dislikes.size %>hates</a>
                         </div>
-                    <% elsif @current_user.dislikes?(movie) %>
+                    <% elsif current_user.dislikes?(movie) %>
                         <div class="votes">
                             <a><%= movie.likes.size %>likes</a> | <a><%= movie.dislikes.size %>hates</a>
                         </div>

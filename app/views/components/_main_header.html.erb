@@ -2,9 +2,11 @@
     <a href='/' class="logo">
         <h1>MovieRama</h1>
     </a>
-   <% if @current_user %>
+   <% if Current.session %>
         <div class="session">
-
+            <%= form_with url: logout_path, method: "delete" do |form| %>
+                <%= form.submit "Logout", class: "button-link" %>
+            <% end %>
         </div>
     <% else %>
         <div class="session">

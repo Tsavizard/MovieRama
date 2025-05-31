@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root "home#index", controller: "HomeController"
   resources :movies
   resource :session
   get "login" => "sessions#new", as: :login
@@ -24,5 +25,4 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root "home#index", controller: "HomeController"
 end
