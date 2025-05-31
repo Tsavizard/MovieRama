@@ -4,7 +4,10 @@
             <h4><%= movie.title %></h4>
 
             <span class="movie-submission-details">
-                Posted by <%= movie.user.username %> X days ago
+                Posted by
+                <% name = current_user&.has_submitted?(movie) ? 'You':  movie.user.username %>
+                <%= link_to name, movies_path(user: movie.user.id), class: "username" %>
+                <%= time_ago_in_words(movie.created_at) %> ago
             </span>
 
             <p class="movie-description">
@@ -12,33 +15,14 @@
             </p>
 
             <section class="vote-section">
-                <% if current_user %>
-                    <% if current_user == movie.user %>
-                        <div class="votes">
-                            <span><%= movie.likes.size %>likes</span> | <span><%= movie.dislikes.size %>hates</span>
-                        </div>
-                    <% elsif movie.votes.empty? %>
-                        Be the first to vote for this movie: <a>Like</a> | <a>Hate</a>
-                    <% elsif current_user.likes?(movie) %>
-                        <div class="votes">
-                            <a><%= movie.likes.size %>likes</a> | <a><%= movie.dislikes.size %>hates</a>
-                        </div>
-                    <% elsif current_user.dislikes?(movie) %>
-                        <div class="votes">
-                            <a><%= movie.likes.size %>likes</a> | <a><%= movie.dislikes.size %>hates</a>
-                        </div>
-                    <% else  %>
-                        <div class="votes">
-                            <a><%= movie.likes.size %>likes</a> | <a><%= movie.dislikes.size %>hates</a>
-                        </div>
-
-                    <% end %>
+                <% if movie.votes.any? %>
+                    <%= render partial: 'components/votes', locals: { current_user: current_user, movie: movie } %>
                 <% else %>
-                    <% if movie.votes.any? %>
-                        <div class="votes">
-                            <span><%= movie.likes.size %>likes</span> | <span><%= movie.dislikes.size %>hates</span>
-                        </div>
-                    <% end %>
+                    <%= render partial: 'components/no_votes_yet', locals: { current_user: current_user, movie: movie } %>
+                <% end %>
+
+                <% if current_user&.get_vote(movie) %>
+                    <%= render partial: 'components/personal_vote', locals: { current_user: current_user, movie: movie } %>
                 <% end %>
             </section>
         </div>

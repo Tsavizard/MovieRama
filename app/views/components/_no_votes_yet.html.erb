@@ -1,0 +1,4 @@
+
+<% if authenticated? and !current_user.has_submitted?(movie)%>
+    Be the first to vote for this movie: <a>Like</a> | <a>Hate</a>
+<% end %>

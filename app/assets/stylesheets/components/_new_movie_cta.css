@@ -1,3 +1,7 @@
 .new-movie-cta {
   padding: 0.5rem 1.5rem;
+  border-radius: 1rem;
+  border: 2px solid green;
+  background-color: rgb(89, 209, 89);
+  color: white;
 }

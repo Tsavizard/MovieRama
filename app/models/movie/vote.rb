@@ -1,4 +1,4 @@
-class User::Vote < ApplicationRecord
+class Movie::Vote < ApplicationRecord
   belongs_to :user
   belongs_to :movie
 
@@ -7,6 +7,6 @@ class User::Vote < ApplicationRecord
   validate :validate_not_own_submission
 
   def validate_not_own_submission
-    errors.add :user, "User can not vote for movies they have submitted themselves" if movie.user.id == user.id
+    errors.add :user, "User can not vote for movies they have submitted themselves" if user.has_submitted?(movie)
   end
 end

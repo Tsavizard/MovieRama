@@ -11,6 +11,17 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.0].define(version: 2025_05_27_174513) do
+  create_table "movie_votes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "movie_id", null: false
+    t.string "vote_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["movie_id"], name: "index_movie_votes_on_movie_id"
+    t.index ["user_id", "movie_id"], name: "index_movie_votes_on_user_and_movie", unique: true
+    t.index ["user_id"], name: "index_movie_votes_on_user_id"
+  end
+
   create_table "movies", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -29,17 +40,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_27_174513) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
-  create_table "user_votes", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "movie_id", null: false
-    t.string "vote_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["movie_id"], name: "index_user_votes_on_movie_id"
-    t.index ["user_id", "movie_id"], name: "index_user_votes_on_user_and_movie", unique: true
-    t.index ["user_id"], name: "index_user_votes_on_user_id"
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
     t.string "email_address", null: false
@@ -50,8 +50,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_27_174513) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "movie_votes", "movies"
+  add_foreign_key "movie_votes", "users"
   add_foreign_key "movies", "users"
   add_foreign_key "sessions", "users"
-  add_foreign_key "user_votes", "movies"
-  add_foreign_key "user_votes", "users"
 end

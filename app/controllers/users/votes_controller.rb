@@ -1,2 +1,2 @@
-class User::VotesController < ApplicationController
+class Movie::VotesController < ApplicationController
 end

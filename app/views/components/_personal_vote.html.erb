@@ -1,0 +1,13 @@
+<div class="vote-wrapper">
+    <% if current_user.likes?(movie) %>
+        <span class="votes">
+            You like this movie |
+            <%= link_to "Unlike", movie_votes_path(current_user.id),  data: { turbo_method: :delete } %>
+        </span>
+    <% elsif current_user.dislikes?(movie) %>
+        <span class="votes">
+            You hate this movie |
+            <%= link_to "Unhate", movie_votes_path(current_user.id),  data: { turbo_method: :delete } %>
+        </span>
+    <% end %>
+</div>

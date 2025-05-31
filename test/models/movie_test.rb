@@ -45,7 +45,7 @@ class MovieTest < ActiveSupport::TestCase
     movie = movies(:three)
     movie.likes.create(user: user)
 
-    assert_difference -> { User::Vote.count }, -1 do
+    assert_difference -> { Movie::Vote.count }, -1 do
       movie.destroy
     end
   end

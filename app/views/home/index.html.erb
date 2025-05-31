@@ -2,7 +2,7 @@
 <section class="content">
     <%= render partial: 'components/movie_list', locals: { movies: @movies, current_user: Current.session&.user } %>
 
-    <% if Current.session %>
+    <% if authenticated? %>
         <%= render 'components/new_movie_cta' %>
     <% end %>
 </section>

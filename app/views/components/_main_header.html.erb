@@ -2,17 +2,18 @@
     <a href='/' class="logo">
         <h1>MovieRama</h1>
     </a>
-   <% if Current.session %>
-        <div class="session">
-            <%= form_with url: logout_path, method: "delete" do |form| %>
-                <%= form.submit "Logout", class: "button-link" %>
+
+    <div class="session">
+        <% if authenticated? %>
+            <%= tag.div do %>
+                <%= tag.span "Welcome back" %>
+                <%= link_to current_user.username, movies_path(user: current_user.id) %>
             <% end %>
-        </div>
-    <% else %>
-        <div class="session">
-            <a href="/login">Log in</a>
+            <%= button_to "Logout", session_path, method: :delete, class: "button-link" %>
+        <% else %>
+            <%= link_to 'Login', login_path %>
             <span>or</span>
-            <a href="/sign-up" class='button-link'>Sign up</a>
-        </div>
-    <% end  %>
+            <%= link_to 'Sign up', signup_path, class: "button-link" %>
+        <% end %>
+    </div>
 </header>

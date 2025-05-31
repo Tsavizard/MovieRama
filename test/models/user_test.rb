@@ -155,7 +155,7 @@ class UserTest < ActiveSupport::TestCase
     user = users(:three)
     user.like(movies(:three))
 
-    assert_no_difference -> { User::Vote.count } do
+    assert_no_difference -> { Movie::Vote.count } do
       user.destroy
     end
   end

@@ -24,8 +24,8 @@
   </head>
 
   <body>
-    <%= render 'components/main_header' %>
-    <main>
+    <%= render partial: 'components/main_header', locals: { current_user: Current.session&.user } %>
+    <main class="main">
       <%= yield %>
     </main>
   </body>

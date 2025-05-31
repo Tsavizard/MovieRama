@@ -1,22 +1,43 @@
 .movie-list {
   width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .movie-entry {
   width: 100%;
-}
-
-.movie-submission-details {
-}
-
-.movie-description {
-}
-
-.vote-section {
+  border: 1px solid black;
+  padding: 0.75rem;
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  text-align: start;
-}
 
-.votes {
+  .details {
+    .username {
+    }
+  }
+
+  .description {
+  }
+
+  .vote-section {
+    display: flex;
+    gap: 0.5rem;
+    text-align: start;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .vote-wrapper {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    .votes {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+  }
 }

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   root "home#index", controller: "HomeController"
-  resources :movies
+  resources :movies do
+    resources :votes, only: [ :create, :destroy ]
+  end
   resource :session
   get "login" => "sessions#new", as: :login
   post "login" => "sessions#create", as: :create_session
@@ -8,9 +10,7 @@ Rails.application.routes.draw do
   get "sign-up" => "users#new", as: :signup
   post "sign-up" => "users#create", as: :create_user
 
-  resources :users, only: [ :create ] do
-    resources :votes, only: [ :create, :update, :destroy ]
-  end
+  resources :users, only: [ :create ]
 
   resources :passwords, param: :token
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
