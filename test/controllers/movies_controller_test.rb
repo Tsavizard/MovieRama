@@ -3,7 +3,7 @@ require "test_helper"
 class MoviesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @movie = movies(:one)
-    post session_url, params: { email_address: users(:one).email_address, password: "password" }
+    login_user(users(:one))
   end
 
   test "should get index" do
@@ -62,7 +62,7 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
       post movies_url, params: { movie: { description: "movie for testing reasons", title: "some test movie", user_id: users(:one).id } }
     end
 
-    assert_redirected_to movie_url(Movie.last)
+    assert_redirected_to movies_url
   end
 
   test "should not create movie with invalid data" do
@@ -84,7 +84,7 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update movie" do
     patch movie_url(@movie), params: { movie: { description: @movie.description, title: @movie.title } }
-    assert_redirected_to movie_url(@movie)
+    assert_redirected_to movies_url
   end
 
   test "should fail if movie not found" do
