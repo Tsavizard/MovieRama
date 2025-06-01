@@ -1,8 +1,8 @@
 <div class='sort-wrapper'>
     <span>Sort by:</span>
     <div class='sort-links'>
-        <%= link_to 'Likes', movies_path(sort:  'likes') %> |
-        <%= link_to 'Hates', movies_path(sort:  'dislikes') %> |
-        <%= link_to 'Date', movies_path(sort:  'date') %>
+        <%= link_to 'Likes', movies_path(sort:  'likes', user: params[:user]) %> |
+        <%= link_to 'Hates', movies_path(sort:  'dislikes', user: params[:user]) %> |
+        <%= link_to 'Date', movies_path(sort:  'date', user: params[:user]) %>
     </div>
 </div>
