@@ -39,7 +39,17 @@
       align-items: center;
       gap: 0.25rem;
     }
+  }
 
+  .no-vote-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .vote-wrapper,
+  .no-vote-wrapper {
     .vote-submit {
       background: none;
       padding: 0;

@@ -1,4 +1,15 @@
 
 <% if authenticated? and !current_user.has_submitted?(movie)%>
-    Be the first to vote for this movie: <a>Like</a> | <a>Hate</a>
+    <div class="no-vote-wrapper">
+        <span> Be the first to vote for this movie: </span>
+        <%= form_with(url: movie_votes_path(movie.id), scope: :vote, method: :post) do |f| %>
+            <%= f.hidden_field(:vote_type, value: :like) %>
+            <%= f.submit "Like", class: "vote-submit"%>
+        <% end %>
+        |
+        <%= form_with(url: movie_votes_path(movie.id), scope: :vote, method: :post) do |f| %>
+            <%= f.hidden_field(:vote_type, value: :dislike) %>
+            <%= f.submit "Hate", class: "vote-submit"%>
+      <% end %>
+    </div>
 <% end %>
