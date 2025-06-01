@@ -1,12 +1,11 @@
-class Movie::VotesController < ApplicationController
+class VotesController < ApplicationController
   before_action :set_current_user
   before_action :set_movie, only: %i[ create destroy ]
 
   # POST /movies/:movie_id/votes
   def create
-    debugger
     @vote = @movie.votes.new(vote_params)
-    @vote.user = current_user
+    @vote.user = @current_user
 
     if @vote.save
       redirect_to @movie, notice: "Vote was successfully created."
