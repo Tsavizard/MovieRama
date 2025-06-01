@@ -1,6 +1,6 @@
 class VotesController < ApplicationController
   before_action :set_current_user
-  before_action :set_movie, only: %i[ create destroy ]
+  before_action :set_movie, only: %i[ create update destroy ]
 
   # POST /movies/:movie_id/votes
   def create
@@ -14,10 +14,20 @@ class VotesController < ApplicationController
     end
   end
 
+  # PATCH /movies/:movie_id/votes
+  def update
+    @vote = @movie.votes.find_by(user: @current_user)
+    if @vote&.update(vote_params)
+      redirect_to @movie, notice: "Vote was successfully updated."
+    else
+      redirect_to @movie, alert: "Failed to update vote."
+    end
+  end
+
   # DELETE /movies/:movie_id/votes/:id
   def destroy
-    @vote = @movie.votes.find(params[:id])
-    if @vote.destroy
+    @vote = @movie.votes.find_by(user: @current_user)
+    if @vote&.destroy
       redirect_to @movie, notice: "Vote was successfully deleted."
     else
       redirect_to @movie, alert: "Failed to delete vote."
@@ -31,10 +41,10 @@ class VotesController < ApplicationController
   end
 
   def set_movie
-    @movie = @current_user.movies.find(params[:movie_id])
+    @movie = Movie.find(params[:movie_id])
   end
 
   def vote_params
-    params.expect(vote: [ :movie_id, :vote_type ])
+    params.expect(vote: [ :vote_type ])
   end
 end

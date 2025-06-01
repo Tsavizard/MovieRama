@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root "home#index", controller: "HomeController"
   resources :movies do
-    resources :votes, only: [ :create, :destroy ]
+    resources :votes, only: [ :create ]
+    patch "votes" => "votes#update"
+    delete "votes" => "votes#destroy"
   end
   resource :session
   get "login" => "sessions#new", as: :login
