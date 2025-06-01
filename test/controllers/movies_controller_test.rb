@@ -3,7 +3,7 @@ require "test_helper"
 class MoviesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @movie = movies(:one)
-    post session_path, params: { email_address: users(:one).email_address, password: "password" }
+    post session_url, params: { email_address: users(:one).email_address, password: "password" }
   end
 
   test "should get index" do
