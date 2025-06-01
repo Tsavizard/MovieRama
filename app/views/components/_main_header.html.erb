@@ -9,7 +9,7 @@
                 <%= tag.span "Welcome back" %>
                 <%= link_to current_user.username, movies_path(user: current_user.id) %>
             <% end %>
-            <%= button_to "Logout", session_path, method: :delete, class: "button-link" %>
+            <%= button_to "Logout", logout_path, method: :delete, class: "button-link" %>
         <% else %>
             <%= link_to 'Login', login_path %>
             <span>or</span>

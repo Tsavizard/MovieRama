@@ -21,7 +21,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_no_difference -> { Session.count } do
       post session_url, params: { email_address: users(:one).email_address, password: "wrongpassword" }
     end
-    assert_redirected_to new_session_path
+    assert_redirected_to login_path
     assert_equal "Invalid credentials.", flash[:alert]
   end
 
@@ -35,6 +35,6 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   test "should redirect to login page after logout" do
     post session_url, params: { email_address: users(:one).email_address, password: "password" }
     delete session_url
-    assert_redirected_to new_session_path
+    assert_redirected_to login_path
   end
 end

@@ -12,7 +12,7 @@ module Movie::VoteHelper
     if user.send("#{method}?", movie) or user.has_submitted?(movie)
       tag.span "#{pluralize(movie.send(method).size, text)}", class: "votes"
     else
-      link_to "#{pluralize(movie.send(method).size, text)}", votes_path(movie.id), class: "votes", data: { turbo_method: :post }
+      link_to "#{pluralize(movie.send(method).size, text)}", movie_votes_path(movie.id), class: "votes", data: { turbo_method: :post }
     end
   end
 end
