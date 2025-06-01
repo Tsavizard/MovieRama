@@ -1,5 +1,5 @@
 <div class="vote-wrapper">
-    <%= vote_link current_user, movie, "like" %>
+    <%= render partial: "components/vote_link", locals: { user: current_user, movie: movie, vote_type: "like" } %>
     |
-    <%= vote_link current_user, movie, "dislike" %>
+    <%= render partial: "components/vote_link", locals: { user: current_user, movie: movie, vote_type: "dislike" } %>
 </div>

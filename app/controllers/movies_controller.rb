@@ -1,5 +1,6 @@
 class MoviesController < ApplicationController
-  allow_unauthenticated_access only: %i[ index ]
+  # allow_unauthenticated_access only: %i[ index ]
+  # before_action :resume_session, only: %i[ index ]
   before_action :set_current_user
   before_action :set_movie, only: %i[ show edit update destroy ]
 
@@ -47,7 +48,7 @@ class MoviesController < ApplicationController
 
     respond_to do |format|
       if @movie.save
-        format.html { redirect_to @movie, notice: "Movie was successfully created." }
+        format.html { redirect_to movies_path, notice: "Movie was successfully created." }
         format.json { render :show, status: :created, location: @movie }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -60,7 +61,7 @@ class MoviesController < ApplicationController
   def update
     respond_to do |format|
       if @movie.update(movie_params)
-        format.html { redirect_to @movie, notice: "Movie was successfully updated." }
+        format.html { redirect_to movies_path, notice: "Movie was successfully updated." }
         format.json { render :show, status: :ok, location: @movie }
       else
         format.html { render :edit, status: :unprocessable_entity }

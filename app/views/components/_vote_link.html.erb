@@ -1,0 +1,20 @@
+<% text = vote_type == "like" ? "like" : "hate" %>
+<% method = vote_type == "like" ? :likes : :dislikes %>
+
+<% if user.nil? %>
+    <span class="votes">
+      <%= pluralize(movie.send(method).size, text) %>
+    </span>
+<% else %>
+    <% if user.send("#{method}?", movie) or user.has_submitted?(movie) %>
+        <span class="votes">
+        <%= pluralize(movie.send(method).size, text) %>
+        </span>
+    <% else%>
+      <%= form_with(url: movie_votes_path(movie.id), scope: :vote, method: :post) do |f| %>
+        <%= f.hidden_field(:vote_type, value: vote_type) %>
+        <%= f.submit "#{pluralize(movie.send(method).size, text)}", class: "vote-submit"%>
+      <% end %>
+    <% end %>
+<% end %>
+

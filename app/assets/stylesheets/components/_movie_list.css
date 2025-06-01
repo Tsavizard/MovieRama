@@ -39,5 +39,23 @@
       align-items: center;
       gap: 0.25rem;
     }
+
+    .vote-submit {
+      background: none;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      color: blue;
+      font-size: 1rem;
+
+      &:visited,
+      &:hover,
+      &:focus,
+      &:hover,
+      &:active {
+        color: blue;
+      }
+    }
   }
 }

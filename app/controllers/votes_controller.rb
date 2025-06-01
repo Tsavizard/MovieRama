@@ -22,7 +22,7 @@ class VotesController < ApplicationController
 
   # DELETE /movies/:movie_id/votes/:id
   def destroy
-     @movie.votes.destroy_by(user: @current_user)
+    @movie.votes.destroy_by(user: @current_user)
     redirect_to @movie, notice: "Vote was successfully deleted."
   end
 
