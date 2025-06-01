@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyString
+  title: The Shawshank Redemption
+  description: Banker sentenced to life in prison
   user: one
 
 two:
-  title: MyString
-  description: MyString
+  title: Harry Potter
+  description: Magical adventure
   user: two
 
 three:

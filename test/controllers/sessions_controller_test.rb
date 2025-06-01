@@ -14,7 +14,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "should redirect to home after login" do
     post session_url, params: { email_address: users(:one).email_address, password: "password" }
-    assert_redirected_to root_url
+    assert_redirected_to movies_url
   end
 
   test "should not login with invalid credentials" do

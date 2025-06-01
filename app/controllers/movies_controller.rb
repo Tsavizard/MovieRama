@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  allow_unauthenticated_access only: %i[ index ]
   before_action :set_current_user
   before_action :set_movie, only: %i[ show edit update destroy ]
 
@@ -80,7 +81,7 @@ class MoviesController < ApplicationController
 
   private
     def set_current_user
-      @current_user ||= Current.session.user
+      @current_user ||= Current.session&.user
     end
 
     def set_movie

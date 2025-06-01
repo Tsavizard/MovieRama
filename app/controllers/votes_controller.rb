@@ -1,37 +1,29 @@
 class VotesController < ApplicationController
   before_action :set_current_user
-  before_action :set_movie, only: %i[ create update destroy ]
+  before_action :set_movie, only: %i[ create destroy ]
 
   # POST /movies/:movie_id/votes
   def create
-    @vote = @movie.votes.new(vote_params)
-    @vote.user = @current_user
+    @vote =  case params[:vote][:vote_type]
+    when "like"
+       @current_user.like(@movie)
+    when "dislike"
+      @current_user.dislike(@movie)
+    else
+      nil
+    end
 
-    if @vote.save
+    if @vote
       redirect_to @movie, notice: "Vote was successfully created."
     else
       redirect_to @movie, alert: "Failed to create vote."
     end
   end
 
-  # PATCH /movies/:movie_id/votes
-  def update
-    @vote = @movie.votes.find_by(user: @current_user)
-    if @vote&.update(vote_params)
-      redirect_to @movie, notice: "Vote was successfully updated."
-    else
-      redirect_to @movie, alert: "Failed to update vote."
-    end
-  end
-
   # DELETE /movies/:movie_id/votes/:id
   def destroy
-    @vote = @movie.votes.find_by(user: @current_user)
-    if @vote&.destroy
-      redirect_to @movie, notice: "Vote was successfully deleted."
-    else
-      redirect_to @movie, alert: "Failed to delete vote."
-    end
+     @movie.votes.destroy_by(user: @current_user)
+    redirect_to @movie, notice: "Vote was successfully deleted."
   end
 
   private

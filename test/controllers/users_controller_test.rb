@@ -10,14 +10,14 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> { User.count } do
         post users_url, params: { user: { email_address: "assa@sada.com", password: "password", password_confirmation: "password", username: "testuser" } }
     end
-    assert_redirected_to root_url
+    assert_redirected_to movies_url
   end
 
   test "should login the created user and redirect to home" do
     assert_difference -> { Session.count } do
         post users_url, params: { user: { email_address: "assa@sada.com", password: "password", password_confirmation: "password", username: "testuser" } }
     end
-    assert_redirected_to root_url
+    assert_redirected_to movies_url
   end
 
   test "should not create user with invalid data" do

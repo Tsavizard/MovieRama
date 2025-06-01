@@ -1,8 +1,0 @@
-<%= render 'components/movie_sort_bar' %>
-<section class="content">
-    <%= render partial: 'components/movie_list', locals: { movies: @movies, current_user: Current.session&.user } %>
-
-    <% if authenticated? %>
-        <%= render 'components/new_movie_cta' %>
-    <% end %>
-</section>

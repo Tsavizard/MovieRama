@@ -26,6 +26,7 @@ class User < ApplicationRecord
 
     if vote = votes.find_by(movie: movie)
       vote.update(vote_type: "like") unless vote.vote_type == "like"
+      vote
     else
       votes.create(movie: movie, vote_type: "like")
     end
@@ -36,6 +37,7 @@ class User < ApplicationRecord
 
     if vote = votes.find_by(movie: movie)
       vote.update(vote_type: "dislike") unless vote.vote_type == "dislike"
+      vote
     else
       votes.create(movie: movie, vote_type: "dislike")
     end

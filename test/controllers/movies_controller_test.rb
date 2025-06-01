@@ -7,8 +7,49 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get index" do
-    get movies_url
+    get movies_url(format: :json)
     assert_response :success
+    json = JSON.parse(@response.body)
+
+    expected_movies = Movie.all.order(created_at: :desc)
+    assert_equal expected_movies.map(&:id), json.map { |movie| movie["id"] }
+  end
+
+  test "should return movies sorted by like count descending" do
+    get movies_url(format: :json), params: { sort: "likes" }
+    assert_response :success
+    json = JSON.parse(@response.body)
+
+    expected_movies = [ movies(:two), movies(:three), movies(:one) ]
+    assert_equal expected_movies.map(&:id), json.map { |movie| movie["id"] }
+  end
+
+  test "should return movies sorted by dislike count descending" do
+    get movies_url(format: :json), params: { sort: "dislikes" }
+    assert_response :success
+    json = JSON.parse(@response.body)
+
+    expected_movies = [ movies(:one), movies(:three), movies(:two) ]
+    assert_equal expected_movies.map(&:id), json.map { |movie| movie["id"] }
+  end
+
+  test "should return movies sorted by creation date ascending" do
+    get movies_url(format: :json), params: { sort: "date" }
+    assert_response :success
+    json = JSON.parse(@response.body)
+
+    expected_movies = Movie.all
+    assert_equal expected_movies.map(&:id), json.map { |movie| movie["id"] }
+  end
+
+
+  test "should return movies for a specific user" do
+    get movies_url(format: :json), params: { user_id: users(:one).id }
+    assert_response :success
+    json = JSON.parse(@response.body)
+
+    expected_movies = [ movies(:three), movies(:one) ]
+    assert_equal expected_movies.map(&:id), json.map { |movie| movie["id"] }
   end
 
   test "should get new" do

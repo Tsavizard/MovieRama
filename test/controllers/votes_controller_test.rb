@@ -13,16 +13,28 @@ class VotesControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Vote was successfully created.", flash[:notice]
   end
 
-  test "should update an existing vote" do
-    login_user(users(:two))
-    movie = movie_votes(:two).movie
+  test "should update a vote to like" do
+    login_user(users(:one))
+    movie = movies(:two)
 
     assert_no_difference -> { movie.votes.count } do
-      patch movie_votes_url(movie), params: { vote: { vote_type: "like" } }
+      post movie_votes_url(movie), params: { vote: { vote_type: "like" } }
     end
+
     assert_redirected_to movie_url(movie)
-    assert_equal "Vote was successfully updated.", flash[:notice]
-    assert_equal movie_votes(:two).reload.vote_type, "like"
+    assert_equal "Vote was successfully created.", flash[:notice]
+  end
+
+  test "should update a vote to dislike" do
+    login_user(users(:one))
+    movie = movies(:two)
+
+    assert_no_difference -> { movie.votes.count } do
+      post movie_votes_url(movie), params: { vote: { vote_type: "dislike" } }
+    end
+
+    assert_redirected_to movie_url(movie)
+    assert_equal "Vote was successfully created.", flash[:notice]
   end
 
   test "should not create vote without type" do

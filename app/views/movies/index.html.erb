@@ -1,16 +1,8 @@
-<p style="color: green"><%= notice %></p>
+<%= render 'components/movie_sort_bar' %>
+<section class="content">
+    <%= render partial: 'components/movie_list', locals: { movies: @movies, current_user: Current.session&.user } %>
 
-<% content_for :title, "Movies" %>
-
-<h1>Movies</h1>
-
-<div id="movies">
-  <% @movies.each do |movie| %>
-    <%= render movie %>
-    <p>
-      <%= link_to "Show this movie", movie %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New movie", new_movie_path %>
+    <% if authenticated? %>
+        <%= render 'components/new_movie_cta' %>
+    <% end %>
+</section>
