@@ -1,24 +1,11 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Setup
+- rails db:migrate
+- rails db:seed
 
-Things you may want to cover:
+## Run
+- rails server
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Tests
+- clear && rm -rf coverage && rails test && open coverage/index.html
