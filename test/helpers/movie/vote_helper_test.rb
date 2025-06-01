@@ -1,4 +1,4 @@
 require "test_helper"
 
-class Movie::VoteHelperTest < ActiveSupport::TestCase
+class Movie::VoteHelperTest < ActionView::TestCase
 end

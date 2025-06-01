@@ -6,7 +6,7 @@ class MoviesController < ApplicationController
   # GET /movies or /movies.json
   def index
     @movies = Movie.all
-    @movies = @movies.where(user_id: params[:user_id]) if params[:user_id].present?
+    @movies = @movies.where(user_id: params[:user]) if params[:user].present?
 
     case params[:sort]
     when "likes"

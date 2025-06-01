@@ -1,7 +1,7 @@
 <header>
-    <a href='/' class="logo">
+    <%= link_to movies_path, class: "logo" do %>
         <h1>MovieRama</h1>
-    </a>
+    <% end %>
 
     <div class="session">
         <% if authenticated? %>

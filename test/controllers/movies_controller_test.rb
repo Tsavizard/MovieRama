@@ -44,7 +44,7 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
 
 
   test "should return movies for a specific user" do
-    get movies_url(format: :json), params: { user_id: users(:one).id }
+    get movies_url(format: :json), params: { user: users(:one).id }
     assert_response :success
     json = JSON.parse(@response.body)
 
