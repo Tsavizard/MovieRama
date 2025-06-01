@@ -50,7 +50,6 @@ class UserTest < ActiveSupport::TestCase
   test "validates password presence" do
     user = User.new(
       email_address: "alex@example.com",
-      password: "",
       password_confirmation: "12345678",
       username: "alex")
     refute user.valid?
@@ -117,30 +116,145 @@ class UserTest < ActiveSupport::TestCase
     refute user2.valid?
   end
 
-  test "like method creates a like vote" do
+  test "like method creates a like vote if not already voted" do
     user = users(:three)
     movie = movies(:three)
 
+    assert user.votes.find_by(movie: movie).nil?
     assert_difference -> { user.votes.count } do
       user.like(movie)
     end
 
-    assert_equal "like", user.votes.last.vote_type
-    assert_equal movie, user.votes.last.movie
+    assert_equal "like", user.votes.find_by(movie: movie).vote_type
+    assert user.votes.find_by(movie: movie).present?
   end
 
-  test "dislike method creates a dislike vote" do
+  test "like method changes a dislike vote to a like vote" do
+    user = users(:two)
+    movie = movies(:one)
+
+    assert_no_difference -> { user.votes.count } do
+      user.like(movie)
+    end
+
+    assert_equal "like", user.votes.find_by(movie: movie).vote_type
+    assert user.votes.find_by(movie: movie).present?
+  end
+
+  test "like method does nothing to a 'like' vote" do
+    user = users(:one)
+    movie = movies(:two)
+
+    assert_no_difference -> { user.votes.count } do
+      user.like(movie)
+    end
+
+    assert_equal "like", user.votes.find_by(movie: movie).vote_type
+  end
+
+  test "like method does not create a like vote if the user was the one who submitted the movie" do
+    user = users(:one)
+    movie = movies(:one)
+
+    assert_no_difference -> { user.votes.count } do
+      user.like(movie)
+    end
+
+    assert user.votes.find_by(movie: movie).nil?
+  end
+
+  test "dislike method creates a dislike vote if not already voted" do
     user = users(:three)
     movie = movies(:three)
 
+    assert user.votes.find_by(movie: movie).nil?
     assert_difference -> { user.votes.count } do
       user.dislike(movie)
     end
 
-    assert_equal "dislike", user.votes.last.vote_type
-    assert_equal movie, user.votes.last.movie
+    assert_equal "dislike", user.votes.find_by(movie: movie).vote_type
+    assert user.votes.find_by(movie: movie).present?
   end
 
+  test "dislike method changes a like vote to a dislike vote" do
+    user = users(:one)
+    movie = movies(:two)
+
+    assert_no_difference -> { user.votes.count } do
+      user.dislike(movie)
+    end
+
+    assert_equal "dislike", user.votes.find_by(movie: movie).vote_type
+    assert user.votes.find_by(movie: movie).present?
+  end
+
+  test "dislike method does not create a dislike vote if the user was the one who submitted the movie" do
+    user = users(:one)
+    movie = movies(:one)
+
+    assert_no_difference -> { user.votes.count } do
+      user.dislike(movie)
+    end
+
+    assert user.votes.find_by(movie: movie).nil?
+  end
+
+  test "dislike method does nothing to a 'dislike' vote" do
+    user = users(:two)
+    movie = movies(:one)
+
+    assert_no_difference -> { user.votes.count } do
+      user.dislike(movie)
+    end
+
+    assert_equal "dislike", user.votes.find_by(movie: movie).vote_type
+  end
+
+  test "likes? returns true if user has liked the movie" do
+    user = users(:three)
+    movie = movies(:three)
+    user.like(movie)
+    assert user.likes?(movie)
+    assert user.votes.find_by(movie: movie).present?
+  end
+
+  test "likes? returns false if user has not liked the movie" do
+    user = users(:three)
+    movie = movies(:three)
+    assert_not user.likes?(movie)
+    assert user.votes.find_by(movie: movie).nil?
+  end
+
+  test "dislikes? returns true if user has disliked the movie" do
+    user = users(:three)
+    movie = movies(:three)
+    user.dislike(movie)
+    assert user.dislikes?(movie)
+    assert user.votes.find_by(movie: movie).present?
+  end
+
+  test "dislikes? returns false if user has not disliked the movie" do
+    user = users(:three)
+    movie = movies(:three)
+    assert_not user.dislikes?(movie)
+    assert user.votes.find_by(movie: movie).nil?
+  end
+
+  test "get_vote returns the user's vote for a movie" do
+    user = users(:three)
+    movie = movies(:three)
+    user.like(movie)
+    vote = user.get_vote(movie)
+    assert vote.present?
+    assert_equal "like", vote.vote_type
+  end
+
+  test "get_vote returns nil if user has not voted for the movie" do
+    user = users(:three)
+    movie = movies(:three)
+    vote = user.get_vote(movie)
+    assert vote.nil?
+  end
 
   test "movies are not destroyed when user is destroyed" do
     user = users(:three)
