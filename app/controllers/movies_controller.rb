@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
-  # allow_unauthenticated_access only: %i[ index ]
-  # before_action :resume_session, only: %i[ index ]
+  allow_unauthenticated_access only: %i[ index ]
+  before_action :resume_session, only: %i[ index ]
   before_action :set_current_user
   before_action :set_movie, only: %i[ show edit update destroy ]
 
