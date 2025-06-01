@@ -35,8 +35,4 @@ class VotesController < ApplicationController
   def set_movie
     @movie = Movie.find(params[:movie_id])
   end
-
-  def vote_params
-    params.expect(vote: [ :vote_type ])
-  end
 end

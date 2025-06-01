@@ -65,6 +65,13 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to movie_url(Movie.last)
   end
 
+  test "should not create movie with invalid data" do
+    assert_no_difference -> { Movie.count } do
+      post movies_url, params: { movie: { description: "", title: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
   test "should show movie" do
     get movie_url(@movie)
     assert_response :success
@@ -76,8 +83,22 @@ class MoviesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update movie" do
-    patch movie_url(@movie), params: { movie: { description: @movie.description, title: @movie.title, user_id: @movie.user_id } }
+    patch movie_url(@movie), params: { movie: { description: @movie.description, title: @movie.title } }
     assert_redirected_to movie_url(@movie)
+  end
+
+  test "should fail if movie not found" do
+    assert_no_difference -> { Movie.count } do
+      patch movies_url(9), params: { movie: { description: "test movie description", title: "test movie" } }
+    end
+    assert_response :not_found
+  end
+
+  test "should not update movie with invalid data" do
+    assert_no_difference -> { Movie.count } do
+      patch movie_url(@movie), params: { movie: { description: "", title: ""  } }
+    end
+    assert_response :unprocessable_entity
   end
 
   test "should destroy movie" do
